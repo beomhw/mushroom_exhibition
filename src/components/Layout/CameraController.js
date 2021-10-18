@@ -8,7 +8,6 @@ import {IoIosArrowUp, IoIosArrowBack, IoIosArrowDown, IoIosArrowForward} from 'r
 import {
     useDispatch
 } from '../../MessageContext';
-import { sleep } from '../../util/sleep';
 
 // Icon CSS 적용
 const IconCss = css`
@@ -71,18 +70,18 @@ const CameraController = () => {
 
     // 메세지 뜨는 이벤트
     const dispatch = useDispatch();
-    const dispatchAction = async (type) => {
+    const dispatchAction = (type) => {
         // 메세지 타입에 따라 다른 문자열 출력
         dispatch({
             type: type
         })
 
-        await sleep(2000); // 2초 쉬고
-
-        // 메세지 초기화 및 사라지기
-        dispatch({
-            type: "DISAPPEAR"
-        })
+        setTimeout(() => {
+            // 메세지 초기화 및 사라지기
+            dispatch({
+                type: "DISAPPEAR"
+            })
+        }, 2000);
     }
 
     // Up, Right등등이 감싸주는거니까 저기에 이벤트 적용하면 될 듯!

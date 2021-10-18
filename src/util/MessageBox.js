@@ -8,13 +8,9 @@ import {
 
 const Container = styled.div`
     opacity: ${p => p.state ? 1 : 0};
-    position: fixed;
-    width: 350px;
     height: 70px;
-    transition: opacity 0.3s;
+    transition: opacity 0.1s ease;
     /* border: 1px solid #dddddd; */
-    top: 370px;
-    left: 630px;
     /* background-color: #ffffff; */
     display: flex;
     justify-content: center;
@@ -22,7 +18,7 @@ const Container = styled.div`
     
     p {
         font-family: 'S-CoreDream-7ExtraBold';
-        font-size: 20px;
+        font-size: 24px;
     }
 `;
 
