@@ -3,7 +3,12 @@
 import React from 'react';
 import styled, {css} from 'styled-components';
 import {IoIosArrowUp, IoIosArrowBack, IoIosArrowDown, IoIosArrowForward} from 'react-icons/io';
-import {GrPowerReset} from 'react-icons/gr';
+
+// 메세지 alert
+import {
+    useDispatch
+} from '../../MessageContext';
+import { sleep } from '../../util/sleep';
 
 // Icon CSS 적용
 const IconCss = css`
@@ -14,7 +19,6 @@ const IconUp = styled(IoIosArrowUp)`${IconCss};`;
 const IconDown = styled(IoIosArrowDown)`${IconCss};`;
 const IconRight = styled(IoIosArrowForward)`${IconCss};`;
 const IconLeft = styled(IoIosArrowBack)`${IconCss};`;
-const ResetIcon = styled(GrPowerReset)`${IconCss};`;
 
 const Container = styled.div`
     width: 300px;
@@ -36,7 +40,7 @@ const Container = styled.div`
         border: 0;     
         cursor: pointer;
         &:active {
-            ${IconDown}, ${IconUp}, ${IconRight}, ${IconLeft}, ${ResetIcon} {
+            ${IconDown}, ${IconUp}, ${IconRight}, ${IconLeft} {
                 color: #57CC99;
                 font-size: 28px;
             }
@@ -62,21 +66,32 @@ const Left = styled.button`
     grid-row: 2;
     grid-column: 1;
 `;
-const Center = styled.button`
-    grid-row: 2;
-    grid-column: 2;
-`;
 
 const CameraController = () => {
+
+    // 메세지 뜨는 이벤트
+    const dispatch = useDispatch();
+    const dispatchAction = async (type) => {
+        // 메세지 타입에 따라 다른 문자열 출력
+        dispatch({
+            type: type
+        })
+
+        await sleep(2000); // 2초 쉬고
+
+        // 메세지 초기화 및 사라지기
+        dispatch({
+            type: "DISAPPEAR"
+        })
+    }
 
     // Up, Right등등이 감싸주는거니까 저기에 이벤트 적용하면 될 듯!
     return (
         <Container>
-            <Up>     <IconUp />      </Up>
-            <Right>  <IconRight />   </Right>
-            <Down>   <IconDown />    </Down>
-            <Left>   <IconLeft />    </Left>
-            <Center> <ResetIcon />   </Center>
+            <Up onClick={() => dispatchAction("UP")}>     <IconUp />      </Up>
+            <Right onClick={() => dispatchAction("RIGHT")}>  <IconRight />   </Right>
+            <Down onClick={() => dispatchAction("DOWN")}>   <IconDown />    </Down>
+            <Left onClick={() => dispatchAction("LEFT")}>   <IconLeft />    </Left>
         </Container>
     );
 }

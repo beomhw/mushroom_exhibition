@@ -3,6 +3,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {
+    useDispatch
+} from '../../MessageContext';
+
+import { sleep } from '../../util/sleep';
+
 const Container = styled.div`
     width: 250px;
     height: 300px;
@@ -33,10 +39,26 @@ const Button = styled.button`
 
 const MachineController = () => {
 
+    // 메세지 뜨는 이벤트
+    const dispatch = useDispatch();
+    const dispatchAction = async (type) => {
+        // 메세지 타입에 따라 다른 문자열 출력
+        dispatch({
+            type: type
+        })
+
+        await sleep(2000); // 2초 쉬고
+
+        // 메세지 초기화 및 사라지기
+        dispatch({
+            type: "DISAPPEAR"
+        })
+    }
+
     return (
         <Container>
-            <Button>물 주기</Button>
-            <Button>AI 배지 인식</Button>
+            <Button onClick={() => dispatchAction("WATER")}>물 주기</Button>
+            <Button onClick={() => dispatchAction("DETECT")}>AI 배지 인식</Button>
         </Container>
     );
 }

@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import * as Component from './components/Layout/export';
+import MessageBox from './util/MessageBox';
 
 const BodyContainer = styled.div`
     width: 100vw;
@@ -53,6 +54,7 @@ const Layout = () => {
 
     return (
         <BodyContainer>
+            <MessageBox />
             <LayoutContainer>
                 <div id="socketElementContainer">
                     <Component.SocketVideo />
